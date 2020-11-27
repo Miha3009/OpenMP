@@ -42,7 +42,6 @@ void gen_table(){
 }
 
 task get_task(){
-	// Критическая секция. Задачи должны выдаваться последовательно
 	task t;
 
 	#pragma omp critical
@@ -58,12 +57,10 @@ task get_task(){
 void do_shifr(bool& only_letter){
 	while(true){
 		task t = get_task();
-		// Условие остановки
 		if(t.size == 0) break;
 
 		for(int i = t.start; i < t.start + t.size; i++){
 			int key = table[(int)str[i]];
-			// Проверка является ли символ не буквой
 			if(key == 0){
 				only_letter = false;
 				return;
